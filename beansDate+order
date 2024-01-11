@@ -1,0 +1,14 @@
+ @PrePersist
+    public void prePersist() {
+        // Customize the biopsy code generation logic here
+        String currentYear = String.valueOf(LocalDate.now().getYear() % 100); // Get the last two digits of the current year
+        int biopsyNumber = 1; // Default biopsy number
+
+        // Extract the last part of the current biopsy (e.g., B1-1-24)
+        if (biopsy != null && biopsy.matches("^B\\d+-\\d+-\\d+$")) {
+            String[] parts = biopsy.split("-");
+            biopsyNumber = Integer.parseInt(parts[0].substring(1)) + 1;
+        }
+
+        // Set the new biopsy code
+        biopsy = "B" + biopsyNumber + "-1-" + currentYear;
